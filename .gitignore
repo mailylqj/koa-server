@@ -1,0 +1,10 @@
+.idea/
+**/node_modules/
+dist/**/*.map
+**/dist/
+dist/
+.DS_Store
+package-lock.json
+
+account.ts
+auth.ts

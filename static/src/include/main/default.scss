@@ -1,0 +1,26 @@
+.view-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: -blackberry-touch;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none
+}
+
+@media (min-width: 1024px) {
+	.view-container {
+		width: auto;
+		left: 220px;
+	}
+}
+
+.page {
+	padding: 15px;
+}

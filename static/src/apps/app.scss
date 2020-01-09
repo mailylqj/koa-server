@@ -1,0 +1,39 @@
+.wapper{
+    position: absolute;
+    top: 60px;
+    left: 0;
+    bottom: 40px;
+    right: 0;
+}
+
+.container {
+    position: relative;
+    height: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+.container:before,
+.container:after {
+	content: " ";
+	display: table;
+}
+.container:after {
+	clear: both;
+}
+@media (min-width: 768px) {
+	.container {
+		width: 768px;
+	}
+}
+@media (min-width: 1024px) {
+	.container {
+		width: 1024px;
+	}
+}
+@media (min-width: 1200px) {
+	.container {
+		width: 1200px;
+	}
+}
