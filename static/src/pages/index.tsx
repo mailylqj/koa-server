@@ -24,6 +24,7 @@ class Index extends React.Component<IProps, IState>{
     }
 
     render(){
+        const result = fibo(5);
         const {name, userList, tableData, message, enterMsg, sendMessage } = this.props.userStore;
         const header = '应用业务产品研发部-智铺研发组-前端组早会会议纪要';
         const columns:any[] = [{

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.config');
 
 module.exports = merge(baseWebpackConfig, {
@@ -12,13 +13,11 @@ module.exports = merge(baseWebpackConfig, {
 			enforce: 'pre',
 			loader: 'eslint-loader'
 		}]
-	},	
-	plugins: [
-		new webpack.optimize.UglifyJsPlugin({
-			minimize: true,
-			compress: {
-				warnings: false
-			}
-		})
-	]
+	},
+	optimization: {
+		usedExports: true,
+		//minimizer: [
+		//	new TerserPlugin()
+		//]
+	}
 });

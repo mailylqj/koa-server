@@ -9,10 +9,10 @@ const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 const entrys = {};
-const files = glob.sync('static/src/apps/app.tsx');
+const files = glob.sync('static/src/apps/app.js');
 files.forEach((file) => {
 	// const name = file.replace(/(.*\/)*([^.]+).*/ig, '$2');
-	const name = file.replace(/static\/src\/(apps\/[^\*\@\&]+).tsx/ig, '$1');
+	const name = file.replace(/static\/src\/(apps\/[^\*\@\&]+).js/ig, '$1');
 	entrys[name] = path.resolve(file);
 });
 
@@ -22,7 +22,8 @@ module.exports = {
 		path: path.join(__dirname, '../dist'),
 		filename: '[name].js',
 		chunkFilename: 'vendor/[name].chunk.js',
-		publicPath: '/dist/'
+		publicPath: '/dist/',
+		globalObject: 'this'
 	},
 	resolve: {
 		extensions: ['.tsx', '.jsx', '.ts', '.js'],
@@ -40,6 +41,15 @@ module.exports = {
 	},
 	module: {
 		rules: [{
+			test: /\.worker\.js$/, // 以 .worker.js 结尾的文件将被 worker-loader 加载
+			use: { 
+				loader: 'worker-loader',
+				options: {
+					inline: true
+					// fallback: false
+				}
+			}
+		},{
 			test: /\.(j|t)sx?$/,
 			exclude: /node_modules/,
 			use: ['happypack/loader?id=happybabel']
@@ -95,11 +105,11 @@ module.exports = {
             	options: {
 					presets: [
 						["@babel/preset-env", {
-							targets: { ie: 9, },
-							ignoreBrowserslistConfig: true,
-							useBuiltIns: false,
+							//targets: { ie: 9, },
+							//ignoreBrowserslistConfig: true,
+							//useBuiltIns: false,
 							modules: false,
-							exclude: ['transform-typeof-symbol'],
+							//exclude: ['transform-typeof-symbol'],
 						}],
 						["@babel/preset-react", {
 							"targets": "last 2 versions, ie 11", "modules": false
@@ -107,16 +117,16 @@ module.exports = {
 						["@babel/preset-typescript"]
 					],
 					plugins: [
-						'react-hot-loader/babel',
+						// 'react-hot-loader/babel',
 						['@babel/plugin-proposal-decorators', { legacy: true }],
 						['@babel/plugin-proposal-class-properties', { loose: true }],
-						[
+						/* [
 							'babel-plugin-import', {
 								libraryName: 'antd',
 								libraryDirectory: 'es',
                       			style: true
 							}
-						]
+						] */
 					]
 				}
 			}],
@@ -125,6 +135,7 @@ module.exports = {
 		})
 	],
 	optimization: {
+		usedExports: true,
 		splitChunks: {
 			chunks: 'all',
 			minChunks: 1,
